@@ -75,7 +75,7 @@ FROM (
 -- Questão 7: //TODO: consertar 
 SELECT
     t.pno AS num_projeto,
-    MIN(qtd_funcionarios) AS qtd_func
+    MIN(t.qtd_funcionarios) AS qtd_func
 FROM (
     SELECT 
         w.pno,
@@ -84,6 +84,73 @@ FROM (
         works_on w
     GROUP BY
         w.pno
-) AS t;
+) AS t
+GROUP BY
+    t.pno;
 
 
+-- Questão 8:
+SELECT
+    w.pno AS num_proj,
+    AVG(e.salary) AS media_sal
+FROM
+    works_on AS w
+INNER JOIN
+    employee AS e
+    ON e.ssn = w.essn
+GROUP BY
+    w.pno;
+
+
+-- Questão 9:
+SELECT
+    p.pname AS proj_num,
+    t.pno AS proj_nome,
+    AVG(t.salary) AS medial_sal
+FROM
+    project AS p
+INNER JOIN (
+    SELECT
+        *
+    FROM
+        works_on AS w
+    INNER JOIN
+        employee AS e
+        ON e.ssn = w.essn
+) AS t
+    ON p.pnumber = t.pno
+GROUP BY
+    p.pnumber,
+    t.pno;
+
+
+-- Questão 10:
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT
+    *
+FROM
+    project AS p
+INNER JOIN (
+    SELECT
+        *
+    FROM
+        works_on AS w
+    INNER JOIN
+        employee AS e
+        ON e.ssn = w.essn
+) AS t
+    ON p.pnumber = t.salary
+GROUP BY
+    t.pno;
